@@ -1,0 +1,25 @@
+version: '2'
+services:
+  snaphttp:
+    image: candysmurfhub/random-influx-http
+    container_name: snaphttp
+    environment:
+      SNAP_VERSION: LATEST
+    depends_on:
+      - influx
+  influx:
+    container_name: influx
+    image: tutum/influxdb
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+      - "4444:4444/udp"
+    expose:
+      - "8083" 
+      - "8086"
+      - "8090"
+      - "8099"
+      - "4444/udp"
+    environment:
+      - UDP_DB=snap_http
+

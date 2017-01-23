@@ -1,0 +1,24 @@
+version: '2'
+services:
+  snap:
+    image: candysmurfhub/psutil-udp
+    container_name: snap
+    environment:
+      SNAP_VERSION: LATEST
+    depends_on:
+      - influx
+  influx:
+    container_name: influx
+    image: tutum/influxdb
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+      - "4444/udp:4444/udp"
+    expose:
+      - "8083" 
+      - "8086"
+      - "8090"
+      - "8099"
+      - "4444/udp"
+    environment:
+      - UDP_DB=snap_udp
